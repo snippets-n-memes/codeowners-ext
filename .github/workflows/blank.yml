@@ -46,11 +46,11 @@ jobs:
             else
               echo "$GITHUB_ACTOR is a member of $TEAM_SLUG which owns $FOLDER" >> results.log
             fi
-            if $(cat results.txt | grep -q "FAIL"); then
-              cat results.txt
+            if $(cat results.log | grep -q "FAIL"); then
+              cat results.log
               exit 1
             else
-              cat results.txt
+              cat results.log
             fi
           done <<< "$FOLDERS"
 
