@@ -34,7 +34,7 @@ jobs:
           echo $hash
           TEAM_SLUG=$(grep $(git diff --name-only ${hash} HEAD | awk -F '/' '{print $1}') .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
           echo $TEAM_SLUG
-          for i in ""
+          # for i in ""
           curl \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.TOKEN }}"\
