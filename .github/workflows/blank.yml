@@ -42,7 +42,7 @@ jobs:
           for i in "$folders"; do
             TEAM_SLUG=$(grep "$i" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
             echo "$TEAM_SLUG"
-            curl -s \
+            curl \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
