@@ -28,9 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          folders=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
-          while read -r folder; do
-            TEAM_SLUG=$(grep "$folder" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
+          FOLDERS=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
+          while read -r FOLDER; do
+            TEAM_SLUG=$(grep "$FOLDER" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
             member=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
@@ -38,15 +38,19 @@ jobs:
               https://api.github.com/orgs/${GITHUB_REPOSITORY_OWNER}/teams/${TEAM_SLUG}/memberships/${GITHUB_ACTOR} \
               | jq -r '.state')
             if [ -z $TEAM_SLUG ]; then
-              echo "$folder has no coverage in CODEOWNERS, please correct this" >&2
-              exit 2
+              echo "FAIL: $FOLDER has no coverage in CODEOWNERS file, please correct this" >> results.log
             fi
             if [ $member = "null" ]; then
-              echo "Change inconsisent with CODEOWNERS detected" >&2
-              echo "$GITHUB_ACTOR not a member of $TEAM_SLUG which owns $folder" >&2
+              echo "Change inconsisent with CODEOWNERS file detected" >&2
+              echo "FAIL: $GITHUB_ACTOR not a member of $TEAM_SLUG which owns $FOLDER" >> results.log
+            else
+              echo "$GITHUB_ACTOR is a member of $TEAM_SLUG which owns $FOLDER" >> results.log
+            fi
+            if $(cat results.txt | grep -q "FAIL"); then
+              cat results.txt
               exit 1
             else
-              echo "$GITHUB_ACTOR is a member of $TEAM_SLUG which owns $folder"
+              cat results.txt
             fi
-          done <<< "$folders"
+          done <<< "$FOLDERS"
 
