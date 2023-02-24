@@ -29,6 +29,7 @@ jobs:
       - name: Run a one-line script
         run: |
           FOLDERS=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
+
           while read -r FOLDER; do
             TEAM_SLUG=$(grep "$FOLDER" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
             member=$(curl -s \
@@ -37,6 +38,7 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               https://api.github.com/orgs/${GITHUB_REPOSITORY_OWNER}/teams/${TEAM_SLUG}/memberships/${GITHUB_ACTOR} \
               | jq -r '.state')
+              
             if [ -z $TEAM_SLUG ]; then
               echo "FAIL: $FOLDER has no coverage in CODEOWNERS file, please correct this" >> results.log
             fi
@@ -46,11 +48,12 @@ jobs:
             else
               echo "$GITHUB_ACTOR is a member of $TEAM_SLUG which owns $FOLDER" >> results.log
             fi
-            if $(cat results.log | grep -q "FAIL"); then
-              cat results.log
-              exit 1
-            else
-              cat results.log
-            fi
           done <<< "$FOLDERS"
+
+          if $(cat results.log | grep -q "FAIL"); then
+            cat results.log
+            exit 1
+          else
+            cat results.log
+          fi
 
