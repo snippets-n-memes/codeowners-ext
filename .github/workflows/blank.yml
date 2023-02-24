@@ -40,11 +40,13 @@ jobs:
             if [ -z $TEAM_SLUG ]; then
               echo "$folder has no coverage in CODEOWNERS, please correct this" >&2
               exit 2
+            fi
             if [ $member = "null" ]; then
               echo "Change inconsisent with CODEOWNERS detected" >&2
               echo "$GITHUB_ACTOR not a member of $TEAM_SLUG which owns $folder" >&2
               exit 1
             else
               echo "$GITHUB_ACTOR is a member of $TEAM_SLUG which owns $folder"
+            fi
           done <<< "$folders"
 
