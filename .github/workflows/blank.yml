@@ -38,6 +38,8 @@ jobs:
               https://api.github.com/orgs/${GITHUB_REPOSITORY_OWNER}/teams/${TEAM_SLUG}/memberships/${GITHUB_ACTOR} \
               | jq -r '.state')
             if [ $member = "null" ]; then
+              echo "Change inconsisent with CODEOWNERS detected"
+              echo "$GITHUB_ACTOR not a member of $TEAM_SLUG which owns $folder"
               exit 1
             fi
           done <<< "$folders"
