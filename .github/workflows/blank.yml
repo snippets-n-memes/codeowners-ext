@@ -49,5 +49,5 @@ jobs:
               "https://api.github.com/orgs/${GITHUB_REPOSITORY_OWNER}/teams/${TEAM_SLUG}/memberships/${GITHUB_ACTOR}" \
               | jq -r '.state'
           done
-          git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF}
+          # git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF}
           # echo more still again still
