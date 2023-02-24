@@ -31,7 +31,7 @@ jobs:
           folders=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
           while read -r folder; do
             TEAM_SLUG=$(grep "$folder" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
-            curl \
+            curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
