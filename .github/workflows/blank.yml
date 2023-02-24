@@ -35,7 +35,7 @@ jobs:
           # echo $TEAM_SLUG
           echo ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF}
           git fetch origin ${GITHUB_HEAD_REF}
-          folders=$(git diff --name-only ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
+          folders=$(git diff --name-only ${GITHUB_HEAD_REF}..${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
           echo "$folders"
           for i in "$folders"; do
             TEAM_SLUG=$(grep "$i" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
@@ -47,5 +47,5 @@ jobs:
               "https://api.github.com/orgs/${GITHUB_REPOSITORY_OWNER}/teams/${TEAM_SLUG}/memberships/${GITHUB_ACTOR}" \
               | jq -r '.state'
           done
-          git diff --name-only ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF}
-          # echo more still
+          git diff --name-only ${GITHUB_HEAD_REF}..${GITHUB_BASE_REF}
+          # echo more still again
