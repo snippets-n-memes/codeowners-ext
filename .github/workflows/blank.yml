@@ -34,7 +34,7 @@ jobs:
           # TEAM_SLUG=$(grep $(git diff --name-only ${hash} HEAD | awk -F '/' '{print $1}') .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
           # echo $TEAM_SLUG
           echo ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF}
-          git fetch origin ${GITHUB_HEAD_REF}:refs/remotes/origin/${GITHUB_HEAD_REF}
+          git fetch origin ${GITHUB_HEAD_REF}
           folders=$(git diff --name-only ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
           echo "$folders"
           for i in "$folders"; do
