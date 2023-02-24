@@ -50,4 +50,4 @@ jobs:
               | jq -r '.state'
           done
           # git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF}
-          # echo more still again still
+          # echo more
