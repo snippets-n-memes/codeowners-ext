@@ -39,5 +39,6 @@ jobs:
               | jq -r '.state')
             if [ $member = "null" ]; then
               exit 1
+            fi
           done <<< "$folders"
 
