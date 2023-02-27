@@ -1,5 +1,0 @@
-@snippets-n-memes/memers folder4 |folder4
-@snippets-n-memes/fishdank folder1 |folder1|folder1
-@snippets-n-memes/fishdank folder2 |folder2
-@snippets-n-memes/fishdank [a-z0-9]*3$ |folder3
-@snippets-n-memes/fishdank .github |.github|.github
