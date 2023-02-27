@@ -29,7 +29,7 @@ jobs:
       - name: CODEOWNERS Check
         run: |
           FOLDERS=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF} | awk -F '/' '{print $1}')
-
+          REGEX=$(cat .github/CODEOWNERS | awk '{print $1'})
           while read -r FOLDER; do
             TEAM_SLUG=$(grep "$FOLDER" .github/CODEOWNERS | awk -F '@' '{print $2}' | awk -F '/' '{print $2}')
             member=$(curl -s \
