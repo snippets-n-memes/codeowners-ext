@@ -1,7 +1,0 @@
-folder4/[^/]*
-folder1
-folder2
-[^/]*3/
-.*/test
-newfile
-\.github
