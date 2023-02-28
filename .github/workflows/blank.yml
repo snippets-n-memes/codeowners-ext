@@ -67,9 +67,6 @@ jobs:
           fi
 
           sed -i "s/'\*'/*/g" debug.txt
-          
-          echo "$files"
-          cat patterns.txt
 
           echo "$files" \
             | grep -v -E \
