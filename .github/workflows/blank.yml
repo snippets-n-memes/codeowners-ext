@@ -72,10 +72,8 @@ jobs:
             | grep -v -E \
               $(cat patterns.txt \
                 | awk '{print "("$1")"}' \
-                | tr "\n" "|" \
-                | sed 's/|$//'\
               ) \
-          >> error1.txt
+          >> error1.log
           
           # teams=$(cat debug.txt \
           #   | awk '{print $1}' \
