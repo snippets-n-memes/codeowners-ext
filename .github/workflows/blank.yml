@@ -30,37 +30,36 @@ jobs:
         run: |
           exit_code=0
           files=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF})
-          echo "$files"
-          # sed 's/\s*#.*$//' .github/CODEOWNERS | sed '/^$/d' > CODEOWNERS
-          # patterns=$(cat CODEOWNERS | awk '{print $1'})
-          # while read -r literal; do
-          #   pattern=$(echo "$literal" | sed 's/\./\\./')
-          #   if [ "${pattern:0:2}" = '**' ]; then
-          #     pattern=$(echo "$pattern" | sed 's/\*\*/\.\*/')
-          #   else
-          #     pattern=$(echo "$pattern" | sed 's/\*/[^\/]*/')
-          #   fi
-          #   echo "$pattern" >> patterns.txt
-          #   if $(echo "$files" | grep -q -E "$pattern"); then 
-          #     echo \
-          #       $(echo \
-          #         $(grep -F "$literal" CODEOWNERS \
-          #           | cut -f 2- -d ' ' \
-          #           | sed 's/@[^\/]*\///g' \
-          #           | tr "[:space:]" "|" \
-          #           | sed 's/|$//'\
-          #         ); \
-          #         echo " "; \
-          #         echo "$literal" | sed "s/\*/'*'/g"; \
-          #         echo "$files" \
-          #           | grep -n -E "$pattern" \
-          #           | sed 's/[0-9]*:/|/' \
-          #           | tr -d "[:space:]" \
-          #           | sed 's/^|//g'\
-          #       ) \
-          #     >> debug.txt;
-          #   fi 
-          # done <<< "$patterns"
+          sed 's/\s*#.*$//' .github/CODEOWNERS | sed '/^$/d' > CODEOWNERS
+          patterns=$(cat CODEOWNERS | awk '{print $1'})
+          while read -r literal; do
+            pattern=$(echo "$literal" | sed 's/\./\\./')
+            if [ "${pattern:0:2}" = '**' ]; then
+              pattern=$(echo "$pattern" | sed 's/\*\*/\.\*/')
+            else
+              pattern=$(echo "$pattern" | sed 's/\*/[^\/]*/')
+            fi
+            echo "$pattern" >> patterns.txt
+            if $(echo "$files" | grep -q -E "$pattern"); then 
+              echo \
+                $(echo \
+                  $(grep -F "$literal" CODEOWNERS \
+                    | cut -f 2- -d ' ' \
+                    | sed 's/@[^\/]*\///g' \
+                    | tr "[:space:]" "|" \
+                    | sed 's/|$//'\
+                  ); \
+                  echo " "; \
+                  echo "$literal" | sed "s/\*/'*'/g"; \
+                  echo "$files" \
+                    | grep -n -E "$pattern" \
+                    | sed 's/[0-9]*:/|/' \
+                    | tr -d "[:space:]" \
+                    | sed 's/^|//g'\
+                ) \
+              >> debug.txt;
+            fi 
+          done <<< "$patterns"
 
           # if [ ! -e debug.txt ]; then
           #   echo "Author has made no owned changes"
