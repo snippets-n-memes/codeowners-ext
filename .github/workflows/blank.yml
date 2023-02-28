@@ -61,6 +61,11 @@ jobs:
             fi 
           done <<< "$patterns"
 
+          if [ ! -e debug.txt ]; then
+            echo "Author has made no owned changes"
+            exit 2
+          fi
+
           sed -i "s/'\*'/*/g" debug.txt
 
           echo "$files" \
