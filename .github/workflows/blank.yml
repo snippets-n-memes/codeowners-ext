@@ -99,7 +99,7 @@ jobs:
           done <<< "$teams"
 
           while read -r member; do
-              grep -v "$member" debug.txt >> nonmember.txt
+              grep -v "$member" debug.txt ||: >> nonmember.txt
           done < member.txt
 
           cat nonmember.txt | sort | uniq >> error2.log
