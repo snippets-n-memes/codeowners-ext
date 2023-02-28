@@ -28,7 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: CODEOWNERS Check
         run: |
-          exit_code=0
+          # exit_code=0
           files=$(git diff --name-only origin/${GITHUB_HEAD_REF} origin/${GITHUB_BASE_REF})
           sed 's/\s*#.*$//' .github/CODEOWNERS | sed '/^$/d' > COWNERS
           patterns=$(cat COWNERS | awk '{print $1'})
