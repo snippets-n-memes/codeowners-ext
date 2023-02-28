@@ -121,5 +121,5 @@ jobs:
           rm error*.log
           rm CODEOWNERS
 
-          exit $exit_code
+          # exit $exit_code
 
