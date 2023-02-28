@@ -1,6 +1,9 @@
-folder4 @snippets-n-memes/memers
-folder1 @snippets-n-memes/fishdank
-folder2 @snippets-n-memes/fishdank
-folder3 @snippets-n-memes/fishdank
+# comments
+
+folder4/* @snippets-n-memes/memers
+folder1 @snippets-n-memes/fishdank @snippets-n-memes/memers
+folder2 @snippets-n-memes/fishdank @snippets-n-memes/memers
+*3/ @snippets-n-memes/fishdank
+**/test @snippets-n-memes/memers
 newfile @snippets-n-memes/fishdank
 .github @snippets-n-memes/fishdank
